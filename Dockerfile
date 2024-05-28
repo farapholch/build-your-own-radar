@@ -1,3 +1,4 @@
+
 FROM nginx:1.23.0
 
 RUN apt-get update && apt-get upgrade -y
@@ -15,15 +16,10 @@ COPY package.json ./
 COPY package-lock.json ./
 RUN npm ci
 
-RUN npm run build:prod
-RUN mkdir -p /opt/build-your-own-radar
-RUN mkdir -p /src/build-your-own-radar/dist/* ./
-COPY /src/build-your-own-radar/spec/end_to_end_tests/resources/localfiles/* ./files/
-COPY /src/build-your-own-radar/default.template /etc/nginx/conf.d/default.conf
-
 COPY . ./
 
 # Override parent node image's entrypoint script (/usr/local/bin/docker-entrypoint.sh),
 # which tries to run CMD as a node command
 ENTRYPOINT []
 CMD ["./build_and_start_nginx.sh"]
+EXPOSE 80
