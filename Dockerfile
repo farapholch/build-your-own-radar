@@ -16,6 +16,10 @@ COPY package.json ./
 COPY package-lock.json ./
 RUN npm ci
 
+RUN mkdir -p /opt/build-your-own-radar
+RUN mkdir -p /opt/build-your-own-radar/dist
+RUN mkdir -p /opt/build-your-own-radar/files
+
 COPY . ./
 
 # Override parent node image's entrypoint script (/usr/local/bin/docker-entrypoint.sh),
